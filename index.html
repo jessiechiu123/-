@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>管理科學報告調查</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f9f9f9;
+    }
+
+    h2 {
+      font-size: 22px;
+      color: #333;
+      margin: 0 20px 40px 20px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      font-size: 18px;
+      padding: 15px 30px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s;
+      width: 250px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-a {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    .btn-b {
+      background-color: #28A745;
+      color: white;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    #message {
+      margin-top: 30px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h2>
+    感謝你幫我們完成管理科學的報告，<br>
+    想問你所欲前往的目的是以下何者？
+  </h2>
+
+  <button class="btn btn-a" onclick="sendOption('百年樓/藝文中心')">百年樓/藝文中心</button>
+  <br>
+  <button class="btn btn-b" onclick="sendOption('山上宿舍')">山上宿舍</button>
+
+  <div id="message"></div>
+
+  <script>
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbwzWxAguMV83wn78WFMHtSFVZm-CgDLsmJoW-lqoz6lS4xcJvL7MzBl4pqR_vhGT2O7eQ/exec'; // ⚠️ 請替換為你自己的 URL
+
+    function sendOption(option) {
+      const data = { option: option };
+
+      fetch(scriptUrl, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById('message').innerText = '✅ 已成功紀錄你的選擇：「' + option + '」';
+      })
+      .catch(err => {
+        document.getElementById('message').innerText = '❌ 錯誤：' + err;
+      });
+    }
+  </script>
+</body>
+</html>
